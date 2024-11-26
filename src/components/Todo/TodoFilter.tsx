@@ -17,6 +17,7 @@ export const TodoFilter = ({
   return (
     <div className="flex items-center gap-4">
       <Select
+        label="🔍 필터"
         className="w-40"
         value={priority.toString()}
         onChange={(e) => {
@@ -24,10 +25,10 @@ export const TodoFilter = ({
           onPriorityChange(value === 'all' ? 'all' : Number(value) as PriorityNumber);
         }}
         options={[
-          { value: 'all', label: '모든 우선순위' },
-          { value: '1', label: '높음' },
-          { value: '2', label: '중간' },
-          { value: '3', label: '낮음' },
+          { value: 'all', label: '📋 모든 우선순위' },
+          { value: '1', label: '❗ 높음' },
+          { value: '2', label: '⚠️ 중간' },
+          { value: '3', label: '✅ 낮음' },
         ]}
       />
       
@@ -38,7 +39,9 @@ export const TodoFilter = ({
           onChange={(e) => onShowCompletedChange(e.target.checked)}
           className="h-4 w-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
         />
-        <span className="text-sm text-gray-700">완료된 항목 표시</span>
+        <span className="text-sm text-gray-700">
+          {showCompleted ? '✅ 완료된 항목 표시' : '❌ 완료된 항목 숨기기'}
+        </span>
       </label>
     </div>
   );

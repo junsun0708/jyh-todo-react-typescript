@@ -20,6 +20,7 @@ export const TodoSearch = ({ onSearch }: TodoSearchProps) => {
 
   return (
     <Input
+      label="🔍 검색"
       placeholder="할 일 검색..."
       value={searchQuery}
       onChange={handleChange}

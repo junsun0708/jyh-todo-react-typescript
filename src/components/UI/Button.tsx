@@ -14,12 +14,12 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const baseStyles = 'rounded-md font-medium transition-colors focus:outline-none focus:ring-2';
+  const baseStyles = 'rounded-md font-medium transition-colors focus:outline-none focus:ring-2 flex items-center justify-center gap-2';
   
   const variantStyles = {
-    primary: 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500/50',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-500/50',
-    danger: 'bg-danger-500 text-white hover:bg-danger-600 focus:ring-danger-500/50',
+    primary: 'bg-primary-500 text-white hover:bg-primary-600 focus:ring-primary-500/50 before:content-["✨"]',
+    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-500/50 before:content-["📝"]',
+    danger: 'bg-danger-500 text-white hover:bg-danger-600 focus:ring-danger-500/50 before:content-["🗑️"]',
   };
 
   const sizeStyles = {
@@ -34,6 +34,7 @@ export const Button = ({
         baseStyles,
         variantStyles[variant],
         sizeStyles[size],
+        'before:font-emoji',
         className
       )}
       {...props}

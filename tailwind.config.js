@@ -56,6 +56,9 @@ export default {
           900: '#064e3b',
         },
       },
+      fontFamily: {
+        emoji: ['Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji'],
+      },
     },
   },
   plugins: [],

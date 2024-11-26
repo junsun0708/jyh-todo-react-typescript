@@ -10,6 +10,12 @@ interface TodoFormProps {
   submitLabel?: string;
 }
 
+const priorityOptions = [
+  { value: '1', label: '❗ 높음' },
+  { value: '2', label: '⚠️ 중간' },
+  { value: '3', label: '✅ 낮음' },
+];
+
 export const TodoForm = ({
   onSubmit,
   initialData = {},
@@ -46,7 +52,7 @@ export const TodoForm = ({
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <Input
-        label="할 일"
+        label="📝 할 일"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="할 일을 입력하세요"
@@ -54,21 +60,17 @@ export const TodoForm = ({
       />
 
       <Input
-        label="내용"
+        label="📄 내용"
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="상세 내용을 입력하세요"
       />
       
       <Select
-        label="우선순위"
+        label="🎯 우선순위"
         value={priority.toString()}
         onChange={(e) => setPriority(Number(e.target.value) as PriorityNumber)}
-        options={[
-          { value: '1', label: '높음' },
-          { value: '2', label: '중간' },
-          { value: '3', label: '낮음' },
-        ]}
+        options={priorityOptions}
       />
       
       <Button type="submit" className="w-full">
