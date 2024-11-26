@@ -1,0 +1,8 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /todos/{document=**} {
+      allow read, write: if true;  // 테스트용. 실제 운영에서는 보안 규칙 필요
+    }
+  }
+} 

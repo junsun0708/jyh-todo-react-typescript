@@ -1,11 +1,11 @@
-import { TodoItem } from './TodoItem';
+import { TodoItem } from './TodoItem.tsx';
 import type { Todo } from '../../types/todo';
 
 interface TodoListProps {
   todos: Todo[];
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
-  onEdit: (id: string) => void;
+  onEdit: (id: string, data: Partial<Todo>) => void;
 }
 
 export const TodoList = ({ todos, onToggle, onDelete, onEdit }: TodoListProps) => {

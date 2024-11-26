@@ -1,6 +1,6 @@
 import { useState, useEffect, ChangeEvent } from 'react';
-import { Input } from '../UI/Input';
-import { useDebounce } from '../../hooks/useDebounce';
+import { Input } from '../UI/Input.tsx';
+import { useDebounce } from '../../hooks/useDebounce.ts';
 
 interface TodoSearchProps {
   onSearch: (query: string) => void;

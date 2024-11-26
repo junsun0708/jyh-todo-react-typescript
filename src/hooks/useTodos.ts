@@ -1,18 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  query,
-  orderBy,
-  onSnapshot,
-  where,
-  Timestamp,
-} from 'firebase/firestore';
-import { db } from '../services/firebase';
-import type { Todo, TodoPriority } from '../types/todo';
+import { onSnapshot } from 'firebase/firestore';
+import { todoService, convertToTodo } from '../services/firebase';
+import type { Todo, CreateTodoInput, UpdateTodoInput } from '../types/todo';
 
 export const useTodos = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -21,16 +10,12 @@ export const useTodos = () => {
 
   // Fetch todos
   useEffect(() => {
-    const q = query(collection(db, 'todos'), orderBy('createdAt', 'desc'));
+    const q = todoService.getDefaultQuery();
     
-    const unsubscribe = onSnapshot(q, 
+    const unsubscribe = onSnapshot(
+      q,
       (snapshot) => {
-        const todosData = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data(),
-          createdAt: doc.data().createdAt.toDate(),
-        })) as Todo[];
-        
+        const todosData = snapshot.docs.map(convertToTodo);
         setTodos(todosData);
         setLoading(false);
       },
@@ -43,45 +28,34 @@ export const useTodos = () => {
     return () => unsubscribe();
   }, []);
 
-  // Add todo
-  const addTodo = useCallback(async (title: string, priority: TodoPriority) => {
+  const addTodo = useCallback(async (input: CreateTodoInput) => {
     try {
-      await addDoc(collection(db, 'todos'), {
-        title,
-        priority,
-        completed: false,
-        createdAt: Timestamp.now(),
-      });
+      await todoService.create(input);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     }
   }, []);
 
-  // Update todo
-  const updateTodo = useCallback(async (id: string, data: Partial<Todo>) => {
+  const updateTodo = useCallback(async (id: string, input: UpdateTodoInput) => {
     try {
-      const todoRef = doc(db, 'todos', id);
-      await updateDoc(todoRef, data);
+      await todoService.update(id, input);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     }
   }, []);
 
-  // Delete todo
   const deleteTodo = useCallback(async (id: string) => {
     try {
-      const todoRef = doc(db, 'todos', id);
-      await deleteDoc(todoRef);
+      await todoService.delete(id);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error occurred');
     }
   }, []);
 
-  // Toggle todo completion
   const toggleTodo = useCallback(async (id: string) => {
     const todo = todos.find(t => t.id === id);
     if (todo) {
-      await updateTodo(id, { completed: !todo.completed });
+      await updateTodo(id, { isCompleted: !todo.isCompleted });
     }
   }, [todos, updateTodo]);
 

@@ -1,24 +1,23 @@
 import { useState, FormEvent } from 'react';
-import { Input } from '../UI/Input';
-import { Select } from '../UI/Select';
-import { Button } from '../UI/Button';
-import type { TodoPriority } from '../../types/todo';
+import { Input } from '../UI/Input.tsx';
+import { Select } from '../UI/Select.tsx';
+import { Button } from '../UI/Button.tsx';
+import type { CreateTodoInput, PriorityNumber } from '../../types/todo';
 
 interface TodoFormProps {
-  onSubmit: (title: string, priority: TodoPriority) => void;
-  initialTitle?: string;
-  initialPriority?: TodoPriority;
+  onSubmit: (input: CreateTodoInput) => void;
+  initialData?: Partial<CreateTodoInput>;
   submitLabel?: string;
 }
 
 export const TodoForm = ({
   onSubmit,
-  initialTitle = '',
-  initialPriority = 'medium',
+  initialData = {},
   submitLabel = '추가'
 }: TodoFormProps) => {
-  const [title, setTitle] = useState(initialTitle);
-  const [priority, setPriority] = useState<TodoPriority>(initialPriority);
+  const [title, setTitle] = useState(initialData.title || '');
+  const [content, setContent] = useState(initialData.content || '');
+  const [priority, setPriority] = useState<PriorityNumber>(initialData.priority || 2);
   const [error, setError] = useState('');
 
   const handleSubmit = (e: FormEvent) => {
@@ -29,9 +28,18 @@ export const TodoForm = ({
       return;
     }
 
-    onSubmit(title.trim(), priority);
-    setTitle('');
-    setPriority('medium');
+    onSubmit({
+      title: title.trim(),
+      content: content.trim(),
+      priority,
+      isCompleted: false,
+    });
+
+    if (!initialData.title) {
+      setTitle('');
+      setContent('');
+      setPriority(2);
+    }
     setError('');
   };
 
@@ -44,15 +52,22 @@ export const TodoForm = ({
         placeholder="할 일을 입력하세요"
         error={error}
       />
+
+      <Input
+        label="내용"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="상세 내용을 입력하세요"
+      />
       
       <Select
         label="우선순위"
-        value={priority}
-        onChange={(e) => setPriority(e.target.value as TodoPriority)}
+        value={priority.toString()}
+        onChange={(e) => setPriority(Number(e.target.value) as PriorityNumber)}
         options={[
-          { value: 'high', label: '높음' },
-          { value: 'medium', label: '중간' },
-          { value: 'low', label: '낮음' },
+          { value: '1', label: '높음' },
+          { value: '2', label: '중간' },
+          { value: '3', label: '낮음' },
         ]}
       />
       
