@@ -99,26 +99,38 @@
 src/
 ├── components/
 │   ├── Layout/
-│   │   ├── Header.tsx
-│   │   └── Layout.tsx
+│   │   ├── Header.tsx          # 앱 헤더 및 네비게이션
+│   │   └── Layout.tsx          # 전체 레이아웃 구조
 │   ├── Todo/
-│   │   ├── TodoList.tsx
-│   │   ├── TodoItem.tsx
-│   │   ├── TodoForm.tsx
-│   │   └── TodoFilter.tsx
+│   │   ├── TodoList.tsx        # 할 일 목록 컨테이너
+│   │   ├── TodoItem.tsx        # 개별 할 일 항목
+│   │   ├── TodoForm.tsx        # 할 일 추가/수정 폼
+│   │   ├── TodoFilter.tsx      # 필터링 컴포넌트
+│   │   ├── TodoSearch.tsx      # 검색 컴포넌트
+│   │   ├── TodoSort.tsx        # 정렬 컴포넌트
+│   │   └── TodoPriority.tsx    # 우선순위 선택 컴포넌트
 │   └── UI/
-│       ├── Button.tsx
-│       ├── Input.tsx
-│       └── Select.tsx
+│       ├── Button.tsx          # 재사용 가능한 버튼
+│       ├── Input.tsx           # 재사용 가능한 입력 필드
+│       ├── Select.tsx          # 재사용 가능한 선택 컴포넌트
+│       ├── Badge.tsx           # 우선순위/상태 표시 뱃지
+│       ├── Modal.tsx           # 모달 다이얼로그
+│       └── Spinner.tsx         # 로딩 스피너
 ├── hooks/
-│   ├── useTodos.ts
-│   └── useFilter.ts
+│   ├── useTodos.ts            # 할 일 CRUD 커스텀 훅
+│   ├── useFilter.ts           # 필터링 로직 커스텀 훅
+│   ├── useSort.ts             # 정렬 로직 커스텀 훅
+│   └── useSearch.ts           # 검색 로직 커스텀 훅
 ├── services/
-│   └── firebase.ts
+│   └── firebase.ts            # Firebase 설정 및 API
 ├── types/
-│   └── todo.ts
-└── utils/
-    └── helpers.ts
+│   ├── todo.ts                # 할 일 관련 타입 정의
+│   └── common.ts              # 공통 타입 정의
+├── utils/
+│   ├── helpers.ts             # 유틸리티 함수
+│   └── constants.ts           # 상수 정의
+└── context/
+    └── TodoContext.tsx        # 전역 상태 관리
 ```
 
 ## 6. 개선사항 및 추가 제안
@@ -132,7 +144,13 @@ src/
 ## 7. 작업 현황
 - [✅] PRD 문서 작성
 - [✅] 데이터베이스 설계
-- [ ] 컴포넌트 구조 설계
+- [✅] 프로젝트 초기 설정
+  - [✅] React + TypeScript 프로젝트 생성
+  - [✅] TailwindCSS 설정
+  - [✅] Firebase 설정
+  - [✅] ESLint/Prettier 설정
+  - [✅] 타입 정의
+- [✅] 컴포넌트 구조 설계
 - [ ] UI 구현
 - [ ] 기능 구현
 - [ ] 테스트
